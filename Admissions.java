@@ -13,45 +13,51 @@ public class Admissions {
         System.out.println("Enter location of residence:");
         String residence = scan.next();
         scan.close();
-
-        int satcheck = 0, rankcheck = 0, awardcheck = 0, residencecheck = 0;
-        boolean accepted = false, acceptedd = false, padjen = false, failed = false;
+        int acceptedd = 0;
+        boolean accepted = false, padjen = false, failed = false;
         if (lastname.equals("Padjen")) {
             padjen = true;
         }
         if (SATscore >= 1500) {
             accepted = true;
         } else if (SATscore >= 1400){
-            satcheck = 2;
-        } else if (SATscore >= 1200){
-            satcheck = 1;
-        } else {
+            acceptedd ++;
+        } else if (SATscore < 1200){
             failed = true;
         }
         if (rank >= 95) {
             accepted = true;
         } else if (rank >= 90){
-            satcheck = 2;
-        } else if (rank >= 85){
-            satcheck = 1;
-        } else {
+            acceptedd ++;
+        } else if (rank < 85){
             failed = true;
         }
         if (awards >= 10) {
             accepted = true;
         } else if (awards >= 8){
-            awardcheck = 2;
-        } else if (awards >= 3){
-            awardcheck = 1;
-        } else {
+            acceptedd ++;
+        } else if (awards < 3){
             failed = true;
         }
         if (residence.equals("Colorado")) {
             accepted = true;
-        } else if (!residence.equals("Florida")) {
-            residencecheck = 1;
-        } else {
+        } else if (residence.equals("Florida")) {
             failed = true;
+        }
+        if (failed && !padjen) {
+            accepted = false;
+            acceptedd = 0;
+        }
+        if (failed && !padjen) {
+            System.out.println("You are not accepted becase you are worse than acceptable in at least one section.");
+        } else if (padjen) {
+            System.out.println("You are accepted because your last name is Padjen.");
+        }    else if (accepted) {
+            System.out.println("You are accepted because you are elite status in at least one section.");
+        } else if (acceptedd >= 2) {
+            System.out.println("You are accepted because you are Strong in at least two sections.");
+        } else {
+            System.out.println("You are not accepted because you lack enough Strong or Elite sections.");
         }
     }
 }
